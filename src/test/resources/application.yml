@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:mariadb://127.0.0.1:3306/transaction_test
+    username: testuser
+    password: 5678
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: true
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
