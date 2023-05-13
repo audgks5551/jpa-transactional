@@ -7,8 +7,8 @@ spring:
     hibernate:
       ddl-auto: create
     open-in-view: true
-    # open-in-view: false -> transaction ????? ??? ????.
-    # open-in-view: true -> ?? ??? ????.
+    # open-in-view: false -> transaction 범위에서만 영속성 살아있다.
+    # open-in-view: true -> 모든 곳에서 살아있다.
 
 decorator:
   datasource:
