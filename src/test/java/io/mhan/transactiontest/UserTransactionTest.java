@@ -35,7 +35,7 @@ public class UserTransactionTest {
     @DisplayName("test에 @transactional을 추가하고 Rollback false로 설정한 후 save 메서드를 호출하여 user 저장")
     void t2() {
         User autoUser = User.create("user1", "pass");
-        userRepository.save(autoUser);
+        userRepository.save(autoUser); // 1. insert
 
         log.info("메서드 끝!!");
     }
@@ -113,12 +113,12 @@ public class UserTransactionTest {
     // 결론 : rollback 되면 모든 sql문 취소
 
     @Test
-    @DisplayName("save를 두번하기 전에 user password 수정")
+    @DisplayName("save를 두번하기")
     void t8() {
         User autoUser = User.create("user3", "pass");
-        User savedUser = userRepository.save(autoUser);
+        User savedUser = userRepository.save(autoUser); // persist => id null
 
-        User savedUser2 = userRepository.save(savedUser);
+        User savedUser2 = userRepository.save(savedUser); // merge => id exists
 
         assertThat(savedUser).isNotEqualTo(savedUser2);
 
@@ -159,10 +159,14 @@ public class UserTransactionTest {
     @Test
     @DisplayName("테이블에 없는 id를 추가하여 merge를 시키면 어떻게 작동하는지 테스트")
     void t11() {
-        User autoUser = User.create("user3", "pass");
-        User savedUser = userRepository.save(autoUser);
+        User user = User.builder()
+                .id(100L)
+                .username("user3")
+                .password("pass")
+                .build();
+
+        User savedUser = userRepository.save(user);
 
         log.info("메서드 끝!!");
     }
-    // merge가 일어나면 select를 하여 해당 레코드가 없다면 insert문 발생
 }

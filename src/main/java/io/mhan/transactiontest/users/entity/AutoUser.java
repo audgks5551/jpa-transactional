@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.GenerationType.AUTO;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity

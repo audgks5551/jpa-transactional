@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AuthUserTransactionTest {
+public class AutoUserTransactionTest {
 
     @Autowired
     private AutoUserRepository autoUserRepository;
@@ -40,7 +40,7 @@ public class AuthUserTransactionTest {
 
         log.info("메서드 끝!!");
     }
-    // 쓰기 지연이 일어남!! 이유 => SQL문 개수 최소화
+    // insert 지연이 일어남!! 이유 => SQL문 개수 최소화
     // 여기서 commit이 일어남!!
 
     @Test
@@ -72,7 +72,7 @@ public class AuthUserTransactionTest {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback(false)
     @DisplayName("autoUser와 savedUser가 같은 주소값을 가지는지 확인")
     void t5() {
         AutoUser autoUser = AutoUser.create("user1", "pass");
@@ -90,6 +90,7 @@ public class AuthUserTransactionTest {
     @Test
     @Order(1)
     @Transactional
+    @Rollback(true)
     @DisplayName("autoUser와 savedUser가 같은 주소값을 가지는지 확인")
     void t6() {
         AutoUser autoUser = AutoUser.create("user1", "pass");

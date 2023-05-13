@@ -14,10 +14,12 @@ public class InitData {
 
     @Bean
     @Profile("default")
-    public ApplicationRunner defaultInit(AutoUserRepository autoUserRepository) {
+    public ApplicationRunner defaultInit(AutoUserRepository autoUserRepository, UserRepository userRepository) {
         return args -> {
-            AutoUser user = AutoUser.create("user1", "pass");
-            autoUserRepository.save(user);
+            AutoUser autoUser = AutoUser.create("user1", "pass");
+            autoUserRepository.save(autoUser);
+            User user = User.create("user1", "pass");
+            userRepository.save(user);
         };
     }
 }
